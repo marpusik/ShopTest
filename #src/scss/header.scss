@@ -1,49 +1,50 @@
-//====================================================================================================
+@use "sass:math";
+@import "style";
 
-//====================================================================================================
-
-/*
-//Burger
-.icon-menu {
-	display: none;
-	@media (max-width: $md3+px) {
-		display: block;
-		position: absolute;
-		top: 18px;
-		right: 10px;
-		width: 30px;
-		height: 18px;
-		cursor: pointer;
-		z-index: 5;
-		span {
-			transition: all 0.3s ease 0s;
-			top: calc(50% - 1px);
-			left: 0px;
-			position: absolute;
-			width: 100%;
-			height: 2px;
-			background-color: #000;
-			&:first-child {
-				top: 0px;
-			}
-			&:last-child {
-				top: auto;
-				bottom: 0px;
-			}
-		}
-		&._active {
-			span {
-				transform: scale(0);
-				&:first-child {
-					transform: rotate(-45deg);
-					top: calc(50% - 1px);
-				}
-				&:last-child {
-					transform: rotate(45deg);
-					bottom: calc(50% - 1px);
-				}
-			}
-		}
-	}
+.header{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  &__wrapper{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 50;
+  }
+  &__body{
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    min-height: 125px;
+  }
+  &__main{
+    display: flex;
+    align-items: center;
+    flex: 0 0 math.div(494, 1240) * 100%;
+  }
+  &__logo{
+    color: #000;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: math.div(29, 24) * 100%;
+  }
 }
-*/
+.menu{
+  flex: 0 1 420px;
+  &__list{
+    @media (min-width:$md3+px){
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+  }
+  &__sub-list{
+    display: none;
+  }
+}
+.menu__sub-list{
+  display: none;
+
+}

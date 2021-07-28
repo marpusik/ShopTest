@@ -24,6 +24,9 @@
 		display: block;
 	}
 }
+._icon-arrow-down:before {
+	content: "\e900";
+}
 ._icon-arrow-link:before {
 	content: "\e901";
 }
@@ -48,6 +51,4 @@
 ._icon-share:before {
 	content: "\e908";
 }
-._icon-arrow-down:before {
-	content: "\e900";
-}
+

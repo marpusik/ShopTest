@@ -106,11 +106,14 @@ body {
     }
   }
   &__content {
+    align-self: flex-start;
     flex: 0 0 math.div(494, 1240) * 100%;
+    @include adaptiv-value("margin-bottom",80,15,1);
   }
   &__slider {
     flex: 1 1 auto;
     min-width: 0;
+    align-self: flex-end;
     @media (min-width: $md2+px) {
       padding: 0 0 0 32px;
     }
@@ -177,8 +180,11 @@ body {
       @include adaptiv-value("width",934,290,1);
     }
   }
+  &__slide{
+    position: relative;
+  }
   &__image {
-    padding: 0 0 50% 0;
+    padding: 0 0 59.1% 0;
   }
   &__content {
     min-width: 295px;
@@ -232,6 +238,8 @@ body {
 }
 .controls-slider-main {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  &__dotts{
+    flex: 1 1 auto;
+  }
 }

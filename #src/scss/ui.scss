@@ -1,5 +1,10 @@
 @use "sass:math";
-
+._title{
+	@include adaptiv-value("font-size",40,24,1);
+	font-weight: 700;
+	line-height: 120%;
+	align-items: center;
+}
 ._footer-title{
 	@include adaptiv-value("font-size",24,20,1);
 	line-height: math.div(29, 24) * 100%;

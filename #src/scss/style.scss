@@ -76,6 +76,8 @@ body {
   }
   &__advantages{
   }
+  &__products{
+  }
 }
 .main-slider {
   background: #fcf8f3;
@@ -305,4 +307,7 @@ body {
     line-height: 150%;
     color: $grayColor;
   }
+}
+.products{
+  @include adaptiv-value("padding-bottom",44,30,1);
 }

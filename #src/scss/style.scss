@@ -318,12 +318,28 @@ body {
     gap: 32px;
     grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
   }
+  &__footer {
+    padding: 32px 0 0 0;
+    text-align: center;
+  }
+  &__more {
+    border: 1px solid $orangeColor;
+    min-width: 245px;
+  }
 }
 .item-product{
   background: #f4f5f7;
   display: flex;
   flex-direction: column;
   position: relative;
+  @media (any-hover: hover) {
+    &:hover {
+      .item-product__actions{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
   &__labels {
     position: absolute;
     z-index: 2;
@@ -388,10 +404,16 @@ body {
       font-weight: normal;
       margin: 0 0 0 16px;
       color: #b0b0b0;
+      text-decoration: line-through;
     }
   }
   &__actions{
+    @media (any-hover: none) {
+      padding: 15px 0 0 0;
+    }
     @media (any-hover: hover) {
+      opacity: 0;
+      visibility: hidden;
       position: absolute;
       top: 0;
       left: 0;
@@ -400,6 +422,7 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: all .5s;
       background-color: rgba(58, 58, 58, 0.74);
       z-index: 3;
     }
@@ -422,6 +445,7 @@ body {
     align-items: center;
     color: inherit;
     font-weight: 600;
+    transition: color .5s;
     &::before {
       margin: 0 10px 0 0;
       font-size: 16px;

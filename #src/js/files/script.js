@@ -1,5 +1,8 @@
+
 window.onload = function () {
 	document.addEventListener("click", documentActions);
+
+	// Actions (делегирование события click)
 	function documentActions(e) {
 		const targetElement = e.target;
 		if (window.innerWidth > 768 && isMobile.any()) {
@@ -19,8 +22,32 @@ window.onload = function () {
 			getProducts(targetElement);
 			e.preventDefault();
 		}
+		if (targetElement.classList.contains('actions-product__button')) {
+			const productId = targetElement.closest('.item-product').dataset.pid;
+			addToCart(targetElement, productId);
+			e.preventDefault();
+		}
+
+		if (targetElement.classList.contains('cart-header__icon') || targetElement.closest('.cart-header__icon')) {
+			if (document.querySelector('.cart-list').children.length > 0) {
+				document.querySelector('.cart-header').classList.toggle('_active');
+			}
+			e.preventDefault();
+		} else if (!targetElement.closest('.cart-header') && !targetElement.classList.contains('actions-product__button')) {
+			document.querySelector('.cart-header').classList.remove('_active');
+		}
+
+		if (targetElement.classList.contains('cart-list__delete')) {
+			const productId = targetElement.closest('.cart-list__item').dataset.cartPid;
+			updateCart(targetElement, productId, false);
+			e.preventDefault();
+		}
+
 	}
+
+	// Header
 	const headerElement = document.querySelector('.header');
+
 	const callback = function (entries, observer) {
 		if (entries[0].isIntersecting) {
 			headerElement.classList.remove('_scroll');
@@ -28,14 +55,18 @@ window.onload = function () {
 			headerElement.classList.add('_scroll');
 		}
 	};
+
 	const headerObserver = new IntersectionObserver(callback);
 	headerObserver.observe(headerElement);
+
+
+	// Load More Products
 	async function getProducts(button) {
 		if (!button.classList.contains('_hold')) {
 			button.classList.add('_hold');
 			const file = "json/products.json";
 			let response = await fetch(file, {
-				method: 'GET'
+				method: "GET"
 			});
 			if (response.ok) {
 				let result = await response.json();
@@ -47,6 +78,7 @@ window.onload = function () {
 			}
 		}
 	}
+
 	function loadProducts(data) {
 		const productsItems = document.querySelector('.products__items');
 
@@ -290,3 +322,4 @@ window.onload = function () {
 		});
 	}
 }
+

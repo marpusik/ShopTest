@@ -183,6 +183,7 @@ if (sliders) {
             slider.innerHTML = '';
             slider.appendChild(slider_wrapper);
             slider.classList.add('swiper-bild');
+
             if (slider.classList.contains('_swiper_scroll')) {
                 let sliderScroll = document.createElement('div');
                 sliderScroll.classList.add('swiper-scrollbar');
@@ -195,8 +196,8 @@ if (sliders) {
     }
     sliders_bild_callback();
 }
-function sliders_bild_callback(params) {
-}
+function sliders_bild_callback(params) { }
+
 let sliderScrollItems = document.querySelectorAll('._swiper_scroll');
 if (sliderScrollItems.length > 0) {
     for (let index = 0; index < sliderScrollItems.length; index++) {
@@ -220,8 +221,10 @@ if (sliderScrollItems.length > 0) {
         sliderScroll.scrollbar.updateSize();
     }
 }
-function sliders_bild_callback(params) {
-}
+
+
+function sliders_bild_callback(params) { }
+
 if (document.querySelector('.slider-main__body')) {
     new Swiper('.slider-main__body', {
         observer: true,
@@ -234,15 +237,81 @@ if (document.querySelector('.slider-main__body')) {
         loopAdditionalSlides: 5,
         preloadImages: false,
         parallax: true,
+        // Dotts
         pagination: {
             el: '.controls-slider-main__dotts',
             clickable: true,
         },
+        // Arrows
         navigation: {
-            nextEl: '.slider-main .slider-arrow__next',
-            prevEl: '.slider-main .slider-arrow__prev',
+            nextEl: '.slider-main .slider-arrow_next',
+            prevEl: '.slider-main .slider-arrow_prev',
         }
     });
+}
+
+if (document.querySelector('.slider-rooms__body')) {
+    new Swiper('.slider-rooms__body', {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+        speed: 800,
+        loop: true,
+        watchOverflow: true,
+        loopAdditionalSlides: 5,
+        preloadImages: false,
+        parallax: true,
+        // Dotts
+        pagination: {
+            el: '.slider-rooms__dotts',
+            clickable: true,
+        },
+        // Arrows
+        navigation: {
+            nextEl: '.slider-rooms .slider-arrow_next',
+            prevEl: '.slider-rooms .slider-arrow_prev',
+        }
+    });
+}
+
+if (document.querySelector('.slider-tips__body')) {
+    new Swiper('.slider-tips__body', {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 3,
+        spaceBetween: 32,
+        speed: 800,
+        loop: true,
+        watchOverflow: true,
+        // Dotts
+        pagination: {
+            el: '.slider-tips__dotts',
+            clickable: true,
+        },
+        // Arrows
+        navigation: {
+            nextEl: '.slider-tips .slider-arrow_next',
+            prevEl: '.slider-tips .slider-arrow_prev',
+        },
+        breakpoints: {
+            // when window width is >= 320px
+            320: {
+                slidesPerView: 1.1,
+                spaceBetween: 15
+            },
+            // when window width is >= 768px
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            },
+            // when window width is >= 992px
+            992: {
+                slidesPerView: 3,
+                spaceBetween: 32
+            }
+        }
+    })
 }
 var ua = window.navigator.userAgent;
 var msie = ua.indexOf("MSIE ");
@@ -1033,8 +1102,11 @@ animate({
 			Element.prototype.msMatchesSelector;
 	}
 })();
+
 window.onload = function () {
 	document.addEventListener("click", documentActions);
+
+	// Actions (делегирование события click)
 	function documentActions(e) {
 		const targetElement = e.target;
 		if (window.innerWidth > 768 && isMobile.any()) {
@@ -1054,8 +1126,32 @@ window.onload = function () {
 			getProducts(targetElement);
 			e.preventDefault();
 		}
+		if (targetElement.classList.contains('actions-product__button')) {
+			const productId = targetElement.closest('.item-product').dataset.pid;
+			addToCart(targetElement, productId);
+			e.preventDefault();
+		}
+
+		if (targetElement.classList.contains('cart-header__icon') || targetElement.closest('.cart-header__icon')) {
+			if (document.querySelector('.cart-list').children.length > 0) {
+				document.querySelector('.cart-header').classList.toggle('_active');
+			}
+			e.preventDefault();
+		} else if (!targetElement.closest('.cart-header') && !targetElement.classList.contains('actions-product__button')) {
+			document.querySelector('.cart-header').classList.remove('_active');
+		}
+
+		if (targetElement.classList.contains('cart-list__delete')) {
+			const productId = targetElement.closest('.cart-list__item').dataset.cartPid;
+			updateCart(targetElement, productId, false);
+			e.preventDefault();
+		}
+
 	}
+
+	// Header
 	const headerElement = document.querySelector('.header');
+
 	const callback = function (entries, observer) {
 		if (entries[0].isIntersecting) {
 			headerElement.classList.remove('_scroll');
@@ -1063,14 +1159,18 @@ window.onload = function () {
 			headerElement.classList.add('_scroll');
 		}
 	};
+
 	const headerObserver = new IntersectionObserver(callback);
 	headerObserver.observe(headerElement);
+
+
+	// Load More Products
 	async function getProducts(button) {
 		if (!button.classList.contains('_hold')) {
 			button.classList.add('_hold');
 			const file = "json/products.json";
 			let response = await fetch(file, {
-				method: 'GET'
+				method: "GET"
 			});
 			if (response.ok) {
 				let result = await response.json();
@@ -1082,6 +1182,7 @@ window.onload = function () {
 			}
 		}
 	}
+
 	function loadProducts(data) {
 		const productsItems = document.querySelector('.products__items');
 
@@ -1325,6 +1426,7 @@ window.onload = function () {
 		});
 	}
 }
+
 
 //let btn = document.querySelectorAll('button[type="submit"],input[type="submit"]');
 let forms = document.querySelectorAll('form');
